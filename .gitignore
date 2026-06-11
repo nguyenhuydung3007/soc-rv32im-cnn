@@ -1,0 +1,42 @@
+# =========================
+# Quartus
+# =========================
+*.qpf
+*.qsf
+*.sof
+*.pof
+*.jic
+
+# build files
+db/
+incremental_db/
+output_files/
+*.rpt
+*.summary
+*.smsg
+
+# simulation
+transcript
+vsim.wlf
+work/
+*.vcd
+
+# backup
+*.bak
+
+# vscode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+#Claude
+CLAUDE.md
+
+a.out
+
+# PLL
+pll_bb.v
+pll.ppf
+pll.qip

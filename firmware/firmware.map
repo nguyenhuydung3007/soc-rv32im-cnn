@@ -1,0 +1,78 @@
+
+Merging object attributes
+
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ROM              0x00000000         0x00001000
+RAM              0x00010000         0x00001000
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x00000000      0x918
+ *(.text.start)
+ .text.start    0x00000000        0xc ./start.o
+                0x00000000                start
+ *(.text*)
+ .text          0x0000000c        0x0 ./start.o
+ .text          0x0000000c      0x7d0 ./main.o
+                0x0000000c                uart_print
+                0x00000038                uart_print_hex32
+                0x000000cc                vga_putc
+                0x00000110                vga_print
+                0x00000180                vga_clear_line
+                0x000001d0                vga_clear_screen
+                0x00000204                vga_print_buffer
+                0x00000290                vga_print_hex32
+                0x00000374                gpio_init_debug
+                0x00000394                gpio_update_debug
+                0x000003bc                main
+ *(.rodata*)
+ .rodata.str1.4
+                0x000007dc      0x13b ./main.o
+                                0x137 (size before relaxing)
+                0x00000918                        . = ALIGN (0x4)
+ *fill*         0x00000917        0x1 
+
+.rela.dyn       0x00000918        0x0
+ .rela.text.start
+                0x00000918        0x0 ./start.o
+
+.data           0x00010000        0x0
+ *(.data*)
+ .data          0x00010000        0x0 ./start.o
+ .data          0x00010000        0x0 ./main.o
+                0x00010000                        . = ALIGN (0x4)
+
+.bss            0x00010000        0x0
+ *(.bss*)
+ .bss           0x00010000        0x0 ./start.o
+ .bss           0x00010000        0x0 ./main.o
+                0x00010000                        . = ALIGN (0x4)
+                0x00010000                        . = ALIGN (0x4)
+                0x00011000                        _stack_top = (ORIGIN (RAM) + LENGTH (RAM))
+LOAD ./start.o
+LOAD ./main.o
+LOAD /opt/riscv32i/lib/gcc/riscv32-unknown-elf/15.2.0/libgcc.a
+OUTPUT(firmware.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x00000000       0x2a
+ .riscv.attributes
+                0x00000000       0x28 ./start.o
+ .riscv.attributes
+                0x00000028       0x2a ./main.o
+
+.comment        0x00000000       0x1a
+ .comment       0x00000000       0x1a ./main.o
+                                 0x1b (size before relaxing)
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 ./main.o
